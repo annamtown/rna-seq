@@ -1,10 +1,14 @@
-## This is a shell script for running RNA-seq data from Listeria monocytogenes: https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR6281667
+## This is a shell script for running RNA-seq data from Listeria monocytogenes:
+## https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR6281667
+## https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR6281666
 ## For BINF8441: Bioinformatic Statistics Spring 2018 Final Project
 ## Anna Townsend
 ## May 1 2018
 
 # Download sequence reads
-fastq-dump --fasta SRR6281667
+fastq-dump --fasta SRR6281667 >       #EGD-e with D-glucose
+
+fastq-dump --fasta SRR6281666 >       #EGD-e with D-allose
 
 # run Bowtie2
 # bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r>} [-S <sam>]
