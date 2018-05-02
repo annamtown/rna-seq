@@ -54,3 +54,13 @@ samtools view -S -b SRR6281666.sam > SRR6281666.bam
 bedtools bamtobed -i SRR6281667.bam > SRR6281667.bed
 
 bedtools bamtobed -i SRR6281666.bam > SRR6281666.bed
+
+# the following commmands are to use in R
+#> glucose_667 <- system.file("extdata", "SRR6281667.bed.txt", package="DEGseq")
+#> allose_666 <- system.file("extdata", "SRR6281666.bed.txt", package="DEGseq")
+#> ref <- system.file("extdata", "refFlatChr21.txt", package="DEGseq")
+#> mapResultBatch1 <- c(glucose_667) ## only use the data from kidneyR1L1 and liverR1L2
+#> mapResultBatch2 <- c(allose_666)
+#> outputDir <- file.path(tempdir(), "DEGseqExample")
+#> DEGseq(mapResultBatch1, mapResultBatch2, fileFormat="bed", refFlat=refFlat,
+#+ outputDir=outputDir, method="LRT")
