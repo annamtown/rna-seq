@@ -39,3 +39,18 @@ bowtie2 -x ref_seq -U SRR6281666.fastq -S SRR6281666.sam
 #    24167759 (95.82%) aligned exactly 1 time
 #    334582 (1.33%) aligned >1 times
 #97.15% overall alignment rate
+
+# Convert sam file to bam file using Samtools view
+samtools view -S -b SRR6281667.sam > SRR6281667.bam
+
+samtools view -S -b SRR6281666.sam > SRR6281666.bam
+
+# sort the bam file
+#samtools sort SRR6281667.bam -o SRR6281667.sorted.bam
+
+#samtools sort SRR6281666.bam -o SRR6281666.sorted.bam
+
+# convert bam file to bed file to use in DEGseq
+bedtools bamtobed -i SRR6281667.bam > SRR6281667.bed
+
+bedtools bamtobed -i SRR6281666.bam > SRR6281666.bed
