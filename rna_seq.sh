@@ -19,17 +19,23 @@ fastq-dump SRR6281666    #EGD-e with D-allose
 # -c indicates reference sequence given on cmd line (as <seq_in>)
 bowtie2-build -f AL591824.fasta ref_seq
 
-# run Bowtie2
-# bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r>} [-S <sam>]
-# <bt2-idx>  Index filename prefix (minus trailing .X.bt2)
-# <m1>       Files with #1 mates, paired with files in <m2>
-#           Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2)
-# <m2>       Files with #2 mates, paired with files in <m1>
-#           Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2)
-# <r>        Files with unpaired reads
-#           Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2)
-# <sam>      File for SAM output (default: stdout)
-#
-# <m1>, <m2>, <r> can be comma-separated lists (no whitespace) and can be
-# specified many times  E.g. '-U file1.fq,file2.fq -U file3.fq'
-bowtie2 -x ref_seq -U SRR6281667.fasta -S SRR6281667.sam
+# run Bowtie2 to align RNA-seq files to indexed reference file
+bowtie2 -x ref_seq -U SRR6281667.fastq -S SRR6281667.sam
+
+#anna@GuanYin:~/rna-seq$ bowtie2 -x ref_seq -U SRR6281667.fastq -S SRR6281667.sam
+#25052599 reads; of these:
+#  25052599 (100.00%) were unpaired; of these:
+#    481129 (1.92%) aligned 0 times
+#    23871576 (95.29%) aligned exactly 1 time
+#    699894 (2.79%) aligned >1 times
+#98.08% overall alignment rate
+
+bowtie2 -x ref_seq -U SRR6281666.fastq -S SRR6281666.sam
+
+#anna@GuanYin:~/rna-seq$ bowtie2 -x ref_seq -U SRR6281666.fastq -S SRR6281666.sam
+#25222151 reads; of these:
+#  25222151 (100.00%) were unpaired; of these:
+#    719810 (2.85%) aligned 0 times
+#    24167759 (95.82%) aligned exactly 1 time
+#    334582 (1.33%) aligned >1 times
+#97.15% overall alignment rate
