@@ -55,12 +55,19 @@ bedtools bamtobed -i SRR6281667.bam > SRR6281667.bed
 
 bedtools bamtobed -i SRR6281666.bam > SRR6281666.bed
 
+# Gene annotation of reference sequence using Prokka
+prokka --prefix refgenome AL591824.fasta
+
 # the following commmands are to use in R
+## To install DEGseq package:
+#> source("https://bioconductor.org/biocLite.R")
+#> biocLite("DEGseq")
+#> library(DEGseq)
+
 #> glucose_667 <- system.file("extdata", "SRR6281667.bed.txt", package="DEGseq")
 #> allose_666 <- system.file("extdata", "SRR6281666.bed.txt", package="DEGseq")
-#> ref <- system.file("extdata", "refFlatChr21.txt", package="DEGseq")
+#> refFlat <- system.file("extdata", "refgenome.gff.txt", package="DEGseq")
 #> mapResultBatch1 <- c(glucose_667) ## only use the data from kidneyR1L1 and liverR1L2
 #> mapResultBatch2 <- c(allose_666)
-#> outputDir <- file.path(tempdir(), "DEGseqExample")
-#> DEGseq(mapResultBatch1, mapResultBatch2, fileFormat="bed", refFlat=refFlat,
-#+ outputDir=outputDir, method="LRT")
+#> outputDir <- file.path(tempdir(), "/Users/tennisluver/Desktop")
+#> DEGseq(mapResultBatch1, mapResultBatch2, fileFormat="bed", refFlat=refFlat, outputDir=outputDir, method="LRT")
