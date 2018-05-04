@@ -40,23 +40,59 @@ bowtie2 -x ref_seq -U SRR6281666.fastq -S SRR6281666.sam
 #    334582 (1.33%) aligned >1 times
 #97.15% overall alignment rate
 
-# Convert sam file to bam file using Samtools view
-samtools view -S -b SRR6281667.sam > SRR6281667.bam
+# Use Tophat for creation of accepted_hits.bam file
+# for SRR6281666
+tophat ref_seq SRR6281666.fasta
 
-samtools view -S -b SRR6281666.sam > SRR6281666.bam
+# for SRR6281667
+tophat -o tophat_out_1 ref_seq SRR6281667.fasta
+
+
+# run cufflinks for isoform-based summarization
+# for SRR6281666
+cufflinks /home/anna/rna-seq/tophat_out/accepted_hits.bam
+
+# for SRR6281667
+cufflinks /home/anna/rna-seq/tophat_out_1/accepted_hits.bam
+
+# Create text file containing paths to transcript.gtf files for each sample
+# nano assembly_GTF_list.txt
+
+# merge transcript.gtf files from each lineage
+cuffmerge assembly_GTF_list.txt
+
+# discover novel transcript
+# cuffcompare /home/anna/rna-seq/merged_asm/merged.gtf
+
+# compare gene expressions of two samples
+cuffdiff merged.gtf /home/anna/rna-seq/tophat_out/accepted_hits.bam /home/anna/rna-seq/tophat_out_1/accepted_hits.bam
+
+
+
+
+################################################################################
+# Commands I tried to use, but did not run successfully
+################################################################################
+# Convert sam file to bam file using Samtools view
+#samtools view -S -b SRR6281667.sam > SRR6281667.bam
+
+#samtools view -S -b SRR6281666.sam > SRR6281666.bam
+
+# Fix header in bam file
+# samtools view -bh SRR6281667.bam | samtools bam2fq -
 
 # sort the bam file
-#samtools sort SRR6281667.bam -o SRR6281667.sorted.bam
+# samtools sort -@ 4 -O bam -T SRR6281667.bam -o SRR6281667.sort.bam
 
-#samtools sort SRR6281666.bam -o SRR6281666.sorted.bam
+# samtools sort -@ 4 -O bam -T SRR6281666.bam -o SRR6281666.sort.bam
 
 # convert bam file to bed file to use in DEGseq
-bedtools bamtobed -i SRR6281667.bam > SRR6281667.bed
+#bedtools bamtobed -i SRR6281667.bam > SRR6281667.bed
 
-bedtools bamtobed -i SRR6281666.bam > SRR6281666.bed
+#bedtools bamtobed -i SRR6281666.bam > SRR6281666.bed
 
 # Gene annotation of reference sequence using Prokka
-prokka --prefix refgenome AL591824.fasta
+#prokka --prefix refgenome AL591824.fasta
 
 # the following commmands are to use in R
 ## To install DEGseq package:
