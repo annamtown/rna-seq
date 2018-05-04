@@ -65,7 +65,7 @@ cuffmerge assembly_GTF_list.txt
 # cuffcompare /home/anna/rna-seq/merged_asm/merged.gtf
 
 # compare gene expressions of two samples
-cuffdiff merged.gtf /home/anna/rna-seq/tophat_out/accepted_hits.bam /home/anna/rna-seq/tophat_out_1/accepted_hits.bam
+cuffdiff /home/anna/rna-seq/merged_asm/merged.gtf /home/anna/rna-seq/tophat_out/accepted_hits.bam /home/anna/rna-seq/tophat_out_1/accepted_hits.bam
 
 
 
